@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="./vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{msg}}
+        <!-- <a href="#/login">登录</a>
+        <a href="#/register">注册</a> -->
+        <!-- <router-link to="/login?id=10&name=szw" tag="span">登录</router-link> -->
+        <router-link to="/login/10/szw" tag="span">登录</router-link>
+        <router-link to="/register" tag="span">注册</router-link>
+
+
+        <router-view></router-view>
+    </div>
+</body>
+
+</html>
+<script>
+    var login = {
+        // template: '<h1>登录组件{{ $route.query.id }},{{$route.query.name}}  </h1>',
+        template: '<h1>登录组件：欢迎{{this.$route.params.id}},{{this.$route.params.name}}</h1>',
+        created() {
+            console.log(this.$route.params.id)
+        },
+    }
+
+    var register = {
+        template: '<h1>注册组件</h1>'
+    }
+    var routerObj = new VueRouter({
+        routes: [
+            { path: '/', redirect: '/login' },
+            { path: '/login/:id/:name', component: login },
+            { path: '/register', component: register }
+        ],
+        linkActiveClass: 'myActive'
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "good morning !"
+        },
+        router: routerObj
+    })
+</script>
+<style>
+    .router-link-active {
+        background-color: darkorange
+    }
+
+    .myActive {
+        background-color: indianred
+    }
+</style>
